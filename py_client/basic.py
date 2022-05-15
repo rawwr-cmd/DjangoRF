@@ -5,8 +5,8 @@ import requests
 endpoint = 'http://localhost:8000/api/'
 
 # HTTP response
-get_response = requests.get(endpoint, params={'hi': 'bella'}, json={'query':'hello world'})
+get_response = requests.get(endpoint,  json={'product_id': 123})
 #  print raw text response
 # print(get_response.text)
 print(get_response.json())          # python dict
-print(get_response.status_code)
+# print(get_response.status_code)
