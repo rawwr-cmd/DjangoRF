@@ -36,22 +36,54 @@ class ProductDetailsAPIView(generics.RetrieveAPIView):
 
 product_detail_view = ProductDetailsAPIView.as_view()
 
+# update
 
-class ProductListAPIView(generics.ListAPIView):
+
+class ProductUpdateAPIView(generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'pk'
 
-    # lookup_field = 'pk'
+    def perform_update(self, serializer):
+        print(serializer)
+        instance = serializer.save()
+        if not instance.content:
+            instance.content = instance.title
+            ##
 
 
-product_list_view = ProductListAPIView.as_view()
+product_update_view = ProductUpdateAPIView.as_view()
+
+# delete
+
+
+class ProductDestroyAPIView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def perform_destroy(self, instance):
+        # instance
+        super().perform_destroy(instance)
+
+
+product_destroy_view = ProductDestroyAPIView.as_view()
+
+# class ProductListAPIView(generics.ListAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+
+#     # lookup_field = 'pk'
+
+
+# product_list_view = ProductListAPIView.as_view()
 
 # Using function based views for create Retrieve or List
 
 
 @api_view(['GET', 'POST'])
 def product_alt_view(request, pk=None, *args, **kwargs):
-    method = request.method
+    method = request.method  # PUT -> update #Destroy -> delete
 
     if method == 'GET':
         if pk is not None:

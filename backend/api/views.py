@@ -1,23 +1,24 @@
 # converting string into actual pyhon dictionary
-from django.forms.models import model_to_dict
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from products.models import Product
 from products.serializers import ProductSerializer
 
+
 @api_view(['POST'])
 def api_home(request, *args, **kwargs):
     # getting a random product from products.models
     ''' DRF API VIEW '''
-    serializer = ProductSerializer(data = request.data)
-    if serializer.is_valid(raise_exception = True):
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
 
         # this is the only way to create an instance
         # instance = serializer.save()
         # same as instance = form.save()
         # print(instance)
 
-        print(serializer.data)                        # this is the  not right way to create an instance
+        # this is the  not right way to create an instance
+        print(serializer.data)
         return Response(serializer.data)
-    return Response({"invalid": "not good data"}, status = 400)    
+    return Response({"invalid": "not good data"}, status=400)
