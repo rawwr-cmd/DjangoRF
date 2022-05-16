@@ -11,7 +11,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_my_discount(self, obj):
         # print(obj.id)
-        if not hasattr(obj, 'id'):       #fixing object has no attribute 'get_discount'
+        if not hasattr(obj, 'id'):       #fixing object (has no attribute 'get_discount')
             return None
 
         if not isinstance(obj, Product):
