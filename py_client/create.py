@@ -3,7 +3,7 @@ import requests
 endpoint = 'http://localhost:8000/api/products/'
 
 data = {
-    'title' : 'my favourite Pen',
+    'title' : 'my black Pen',
     'price' : 10
 }
 # HTTP response

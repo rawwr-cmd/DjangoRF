@@ -1,13 +1,9 @@
 import requests 
 
-endpoint = 'http://localhost:8000/api/products/'
+endpoint = 'http://localhost:8000/api/products/1/'
 
-data = {
-    'title' : 'my favourite Pen',
-    'price' : 10
-}
 # HTTP response
-get_response = requests.get(endpoint, data)
+get_response = requests.get(endpoint)
 
 
 print(get_response.json())          # python dict
