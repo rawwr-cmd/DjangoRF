@@ -7,8 +7,7 @@ data = {
     'price' : 10
 }
 # HTTP response
-get_response = requests.get(endpoint, data)
+get_response = requests.post(endpoint, data)
 
 
-print(get_response.json())          # python dict
-# print(get_response.status_code)
+print(get_response.json())          
