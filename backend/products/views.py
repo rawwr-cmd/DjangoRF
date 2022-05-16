@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, mixins
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.response import Response
@@ -77,6 +77,38 @@ product_destroy_view = ProductDestroyAPIView.as_view()
 
 
 # product_list_view = ProductListAPIView.as_view()
+
+# class based view
+class ProductMixinView(mixins.ListModelMixin,
+                       mixins.CreateModelMixin,
+                       mixins.RetrieveModelMixin,  # for detailsview
+                       generics.GenericAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def get(self, request, *args, **kwargs):  # HTTP -> get
+        print(args, kwargs)
+        pk = kwargs.get('pk')
+        if pk is not None:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):  # HTTP -> post
+        return self.create(request, *args, **kwargs)
+
+    # or
+    def perform_create(self, serializer):
+        # print(serializer.validated_data)
+        title = serializer.validated_data.get('title')
+        content = serializer.validated_data.get('content')
+        if content is None:
+            content = 'this is a new model'
+
+        serializer.save(content=content)
+
+
+product_mixin_view = ProductMixinView.as_view()
 
 # Using function based views for create Retrieve or List
 
