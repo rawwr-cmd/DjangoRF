@@ -10,7 +10,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
     def get_my_discount(self, obj):
-        print(obj.id)
+        # print(obj.id)
+        if not hasattr(obj, 'id'):       #fixing object has no attribute 'get_discount'
+            return None
+
+        if not isinstance(obj, Product):
+            return None
+
         return obj.get_discount()   
+       
 
          
