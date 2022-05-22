@@ -13,7 +13,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissions]
 
     # assigning data on createAPIView
     def perform_create(self, serializer):
@@ -44,6 +44,7 @@ product_detail_view = ProductDetailsAPIView.as_view()
 class ProductUpdateAPIView(generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [permissions.DjangoModelPermissions]
     lookup_field = 'pk'
 
     def perform_update(self, serializer):
